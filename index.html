@@ -1,0 +1,56 @@
+<!-- 声明这是一个 HTML5 文档 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>时间展示工具</title>
+
+  <!-- 设置网页样式，让界面更美观 -->
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #time {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>点击按钮获取当前时间</h1>
+
+  <!-- 这个按钮点击后会触发 JavaScript 函数 -->
+  <button onclick="getTime()">获取时间</button>
+
+  <!-- 这个 div 用来显示获取到的时间 -->
+  <div id="time"></div>
+
+  <!-- JavaScript 部分，用于向后端发送请求 -->
+  <script>
+    // 定义函数：发送 GET 请求到后端接口 /time
+    async function getTime() {
+      try {
+        // 发起请求，等待后端返回数据
+        const response = await fetch("http://127.0.0.1:5000/time");
+        
+        // 将返回结果解析成 JSON
+        const data = await response.json();
+        
+        // 获取 JSON 中的时间字段，并显示到页面上
+        document.getElementById("time").innerText = "当前时间：" + data.current_time;
+      } catch (error) {
+        // 如果请求失败，显示错误信息
+        document.getElementById("time").innerText = "请求失败：" + error;
+      }
+    }
+  </script>
+</body>
+</html>
